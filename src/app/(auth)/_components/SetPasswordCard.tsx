@@ -49,13 +49,13 @@ const SetPasswordCard = () => {
                     type="name"
                     placeholder="Name"
                     disabled={pending}
-                    value={formik.values.name}
-                    onChange={formik.handleChange}
-                    onBlur={formik.handleBlur}
+                    {...formik.getFieldProps("name")}
                   />
-                  <p className="text-xs text-destructive">
-                    {formik.errors.name}
-                  </p>
+                  {formik.touched.name && formik.errors.name && (
+                    <p className="text-xs text-destructive">
+                      {formik.errors.name}
+                    </p>
+                  )}
                 </div>
                 <div className="grid gap-2">
                   <Label htmlFor="Phone Number">Phone Number</Label>
@@ -64,13 +64,13 @@ const SetPasswordCard = () => {
                     type="phoneNumber"
                     placeholder="08**********"
                     disabled={pending}
-                    value={formik.values.phoneNumber}
-                    onChange={formik.handleChange}
-                    onBlur={formik.handleBlur}
+                    {...formik.getFieldProps("phoneNumber")}
                   />
-                  <p className="text-xs text-destructive">
-                    {formik.errors.phoneNumber}
-                  </p>
+                  {formik.touched.phoneNumber && formik.errors.phoneNumber && (
+                    <p className="text-xs text-destructive">
+                      {formik.errors.phoneNumber}
+                    </p>
+                  )}
                 </div>
                 <div className="grid gap-2">
                   <Label htmlFor="password">Password</Label>
@@ -79,13 +79,13 @@ const SetPasswordCard = () => {
                     type="password"
                     placeholder="Password"
                     disabled={pending}
-                    value={formik.values.password}
-                    onChange={formik.handleChange}
-                    onBlur={formik.handleBlur}
+                    {...formik.getFieldProps("password")}
                   />
-                  <p className="text-xs text-destructive">
-                    {formik.errors.password}
-                  </p>
+                  {formik.touched.password && formik.errors.password && (
+                    <p className="text-xs text-destructive">
+                      {formik.errors.password}
+                    </p>
+                  )}
                 </div>
                 <div className="grid gap-2">
                   <Button type="submit" className="w-full" disabled={pending}>

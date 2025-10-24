@@ -1,11 +1,11 @@
-import SetPasswordCard from "@/app/(auth)/_components/SetPasswordCard"
+import SetPasswordCard from "@/app/(auth)/_components/SetPasswordCard";
 
-const page = () => {
+const SetPasswordPage = () => {
   return (
-   <>
-   <SetPasswordCard/>
-   </>
-  )
-}
+    <>
+      <SetPasswordCard />
+    </>
+  );
+};
 
-export default page
+export default SetPasswordPage;

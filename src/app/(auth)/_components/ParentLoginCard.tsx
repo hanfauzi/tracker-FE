@@ -12,28 +12,30 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { Label } from "@/components/ui/label";
-import useRegisterHook from "../_hooks/useParentRegister";
-import { validationParentRegisterSchema } from "../_schemas/RegisterSchema";
 import { Spinner } from "@/components/ui/spinner";
+import useParentLoginHook from "../_hooks/useParentLogin";
+import { validationParentLoginSchema } from "../_schemas/LoginParentSchema";
 
-const RegisterCard = () => {
-  const { registerParentMutation } = useRegisterHook();
+const ParentLoginCard = () => {
+  const { loginParentMutation } = useParentLoginHook();
 
   const formik = useFormik({
-    initialValues: { email: "" },
-    validationSchema: validationParentRegisterSchema,
-    onSubmit: (values) => registerParentMutation.mutate(values),
+    initialValues: { email: "", password: "" },
+    validationSchema: validationParentLoginSchema,
+    onSubmit: (values) => loginParentMutation.mutate(values),
   });
 
-  const pending = registerParentMutation.isPending;
+  console.log(formik.touched);
+
+  const pending = loginParentMutation.isPending;
   return (
     <>
-      <div className="flex items-center justify-center w-screen h-screen">
+      <div className="flex items-center justify-center w-full h-full">
         <Card className="w-full max-w-sm">
           <CardHeader>
-            <CardTitle className="text-center">REGISTER</CardTitle>
+            <CardTitle className="text-center">PARENT LOGIN</CardTitle>
             <CardDescription className="text-center">
-              Enter your email below to register
+              Enter your email and password below to login
             </CardDescription>
             <CardAction></CardAction>
           </CardHeader>
@@ -52,6 +54,21 @@ const RegisterCard = () => {
                   {formik.touched.email && formik.errors.email && (
                     <p className="text-xs text-destructive">
                       {formik.errors.email}
+                    </p>
+                  )}
+                </div>
+                <div className="grid gap-2">
+                  <Label htmlFor="password">Password</Label>
+                  <Input
+                    id="password"
+                    type="password"
+                    placeholder="********"
+                    disabled={pending}
+                    {...formik.getFieldProps("password")}
+                  />
+                  {formik.touched.password && formik.errors.password && (
+                    <p className="text-xs text-destructive">
+                      {formik.errors.password}
                     </p>
                   )}
                 </div>
@@ -77,4 +94,4 @@ const RegisterCard = () => {
   );
 };
 
-export default RegisterCard;
+export default ParentLoginCard;
