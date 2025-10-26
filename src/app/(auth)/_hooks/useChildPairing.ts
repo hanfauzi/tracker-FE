@@ -5,38 +5,40 @@ import { AxiosError } from "axios";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
 
-interface ChildLoginPayload {
-  familyCode: string;
+interface ChildPairingPayload {
+  childCode: string;
   pin: string;
 }
 
-interface ChildLoginResponse {
+interface ChildPairingResponse {
   message: string;
   accessToken: string;
   user: { id: string; role: "PARENT" | "CHILD" };
 }
 
-const useChildLoginHook = () => {
+const useChildPairingHook = () => {
   const router = useRouter();
-  const childLoginMutation = useMutation({
-    mutationFn: async (payload: ChildLoginPayload) => {
-      const { data } = await axiosInstance.post<ChildLoginResponse>(
-        "/api/child/login",
+  const childPairingMutation = useMutation({
+    mutationFn: async (payload: ChildPairingPayload) => {
+      const { data } = await axiosInstance.patch<ChildPairingResponse>(
+        "/api/child/pairing",
         payload
       );
       return data;
     },
     onSuccess: (data) => {
       useAuth.getState().setSession(data.accessToken, data.user);
-      toast.success(data.message ?? "Login Succesfull!");
-      router.replace("/child/dashbaoard");
+      toast.success(
+        data.message ?? "Your account now active. You can login now!"
+      );
+      router.replace("/child/dashboard");
     },
     onError: (error: AxiosError<{ message: string }>) => {
-      toast.error(error.response?.data.message ?? "Login Failed!");
+      toast.error(error.response?.data.message ?? "Pairing failed!");
     },
   });
 
-  return { childLoginMutation };
+  return { childPairingMutation };
 };
 
-export default useChildLoginHook;
+export default useChildPairingHook;

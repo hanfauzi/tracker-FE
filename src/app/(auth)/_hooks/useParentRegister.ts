@@ -24,7 +24,7 @@ const useRegisterHook = () => {
       return data;
     },
     onSuccess: (data: RegisterResponse) => {
-      router.push(`/parent/set-password/${data.token}`);
+      router.replace(`/parent/set-password/${data.token}`);
     },
     onError: (error: AxiosError<{ message: string }>) => {
       toast.error(error.response?.data.message ?? "Registration Failed!");

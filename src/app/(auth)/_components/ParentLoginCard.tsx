@@ -25,8 +25,6 @@ const ParentLoginCard = () => {
     onSubmit: (values) => loginParentMutation.mutate(values),
   });
 
-  console.log(formik.touched);
-
   const pending = loginParentMutation.isPending;
   return (
     <>
@@ -80,7 +78,7 @@ const ParentLoginCard = () => {
                         <Spinner className="animate-spin" />
                       </span>
                     ) : (
-                      "Register"
+                      "Login"
                     )}
                   </Button>
                 </div>

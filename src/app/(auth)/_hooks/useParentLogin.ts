@@ -27,7 +27,7 @@ const useParentLoginHook = () => {
     onSuccess: (data) => {
       useAuth.getState().setSession(data.accessToken, data.user);
       toast.success("Login Successful!");
-      router.push("/parent/dashboard");
+      router.replace("/parent/dashboard");
     },
     onError: (error: AxiosError<{ message: string }>) => {
       toast.error(error.response?.data.message ?? "Login failed!");

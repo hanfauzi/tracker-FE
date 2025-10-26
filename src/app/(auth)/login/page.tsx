@@ -1,3 +1,4 @@
+import ChildLoginCard from "../_components/ChildLoginCard";
 import ParentLoginCard from "../_components/ParentLoginCard";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
@@ -8,12 +9,14 @@ const LoginPage = () => {
         <Tabs defaultValue="parent" className="w-full max-w-sm">
           <TabsList>
             <TabsTrigger value="parent">Parent</TabsTrigger>
-            <TabsTrigger value="password">Child</TabsTrigger>
+            <TabsTrigger value="child">Child</TabsTrigger>
           </TabsList>
           <TabsContent value="parent">
             <ParentLoginCard />
           </TabsContent>
-          <TabsContent value="child">Change your password here.</TabsContent>
+          <TabsContent value="child">
+            <ChildLoginCard />
+          </TabsContent>
         </Tabs>
       </div>
     </>

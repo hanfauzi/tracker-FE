@@ -19,28 +19,28 @@ import { Label } from "@/components/ui/label";
 import { Spinner } from "@/components/ui/spinner";
 import { useFormik } from "formik";
 import { REGEXP_ONLY_DIGITS } from "input-otp";
-import useChildLoginHook from "../_hooks/useChildLogin";
-import { validationChildLoginSchema } from "../_schemas/LoginChildSchema";
 import Link from "next/link";
+import useChildPairingHook from "../_hooks/useChildPairing";
+import { validationChildPairingSchema } from "../_schemas/PairingChildSchema";
 
-const ChildLoginCard = () => {
-  const { childLoginMutation } = useChildLoginHook();
+const ChildPairingCard = () => {
+  const { childPairingMutation } = useChildPairingHook();
 
   const formik = useFormik({
-    initialValues: { familyCode: "", pin: "" },
-    validationSchema: validationChildLoginSchema,
-    onSubmit: (values) => childLoginMutation.mutate(values),
+    initialValues: { childCode: "", pin: "" },
+    validationSchema: validationChildPairingSchema,
+    onSubmit: (values) => childPairingMutation.mutate(values),
   });
 
-  const pending = childLoginMutation.isPending;
+  const pending = childPairingMutation.isPending;
   return (
     <>
-      <div className="flex items-center justify-center w-full h-full">
+      <div className="flex items-center justify-center w-screen h-screen">
         <Card className="w-full max-w-sm">
           <CardHeader>
-            <CardTitle className="text-center">CHILD LOGIN</CardTitle>
+            <CardTitle className="text-center">CHILD PAIRING</CardTitle>
             <CardDescription className="text-center">
-              Enter your code and pin below to login
+              Enter your code and pin below to pair
             </CardDescription>
             <CardAction></CardAction>
           </CardHeader>
@@ -48,17 +48,17 @@ const ChildLoginCard = () => {
             <form onSubmit={formik.handleSubmit}>
               <div className="flex flex-col gap-6">
                 <div className="grid gap-2">
-                  <Label htmlFor="familyCode">Family Code</Label>
+                  <Label htmlFor="childCode">Child Code</Label>
                   <Input
-                    id="familyCode"
+                    id="childCode"
                     type="text"
-                    placeholder="Family Code"
+                    placeholder="Child Code"
                     disabled={pending}
-                    {...formik.getFieldProps("familyCode")}
+                    {...formik.getFieldProps("childCode")}
                   />
-                  {formik.touched.familyCode && formik.errors.familyCode && (
+                  {formik.touched.childCode && formik.errors.childCode && (
                     <p className="text-xs text-destructive">
-                      {formik.errors.familyCode}
+                      {formik.errors.childCode}
                     </p>
                   )}
                 </div>
@@ -95,15 +95,15 @@ const ChildLoginCard = () => {
                         <Spinner className="animate-spin" />
                       </span>
                     ) : (
-                      "Login"
+                      "Pair"
                     )}
                   </Button>
                 </div>
 
                 <div className="grid gap-5">
                   <p className="text-sm text-center">
-                    Haven&apos;t connect to your parent?{" "}
-                    <Link href="/child/pairing">{"Connect Here"}</Link>
+                    Already connect to your parent?{" "}
+                    <Link href="/login">{"Login Here"}</Link>
                   </p>
                 </div>
               </div>
@@ -116,4 +116,4 @@ const ChildLoginCard = () => {
   );
 };
 
-export default ChildLoginCard;
+export default ChildPairingCard;
