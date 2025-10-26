@@ -1,4 +1,5 @@
 import { axiosInstance } from "@/lib/axios";
+import { useAuth } from "@/stores/auth";
 import { useMutation } from "@tanstack/react-query";
 import { AxiosError } from "axios";
 import { useRouter } from "next/navigation";
@@ -8,18 +9,24 @@ interface LoginPayload {
   password: string;
 }
 
+interface LoginResponse {
+  accessToken: string;
+  user: { id: string; role: "PARENT" | "CHILD" };
+}
+
 const useParentLoginHook = () => {
   const router = useRouter();
   const loginParentMutation = useMutation({
     mutationFn: async (payload: LoginPayload) => {
-      const { data } = await axiosInstance.post<LoginPayload>(
+      const { data } = await axiosInstance.post<LoginResponse>(
         "/api/parent/login",
         payload
       );
       return data;
     },
-    onSuccess: () => {
-      toast.success('Login Successful!');
+    onSuccess: (data) => {
+      useAuth.getState().setSession(data.accessToken, data.user);
+      toast.success("Login Successful!");
       router.push("/parent/dashboard");
     },
     onError: (error: AxiosError<{ message: string }>) => {
