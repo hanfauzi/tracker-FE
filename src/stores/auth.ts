@@ -1,18 +1,23 @@
-import { User } from "@/types/user";
+"use client";
 import { create } from "zustand";
+import { persist, createJSONStorage } from "zustand/middleware";
 
-interface AuthState {
+type SessionState = {
   accessToken: string | null;
-  user: User | null;
-  setSession: (token: string, user: User) => void;
-  setAccessToken: (token: string | null) => void;
-  clearAuth: () => void;
-}
-export const useAuth = create<AuthState>((set) => ({
-  accessToken: null,
-  user: null,
+  setAccessToken: (t: string | null) => void;
+  clear: () => void;
+};
 
-  setSession: (token, user) => set({ accessToken: token, user }),
-  setAccessToken: (token) => set((s) => ({ accessToken: token, user: s.user })),
-  clearAuth: () => set({ accessToken: null, user: null }),
-}));
+export const useSessionStore = create<SessionState>()(
+  persist(
+    (set) => ({
+      accessToken: null,
+      setAccessToken: (t) => set({ accessToken: t }),
+      clear: () => set({ accessToken: null }),
+    }),
+    {
+      name: "tracker", 
+      storage: createJSONStorage(() => sessionStorage), 
+    }
+  )
+);

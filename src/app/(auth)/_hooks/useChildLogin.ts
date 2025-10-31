@@ -1,5 +1,5 @@
 import { axiosInstance } from "@/lib/axios";
-import { useAuth } from "@/stores/auth";
+import { useSessionStore } from "@/stores/auth";
 import { useMutation } from "@tanstack/react-query";
 import { AxiosError } from "axios";
 import { useRouter } from "next/navigation";
@@ -27,9 +27,9 @@ const useChildLoginHook = () => {
       return data;
     },
     onSuccess: (data) => {
-      useAuth.getState().setSession(data.accessToken, data.user);
+      useSessionStore.getState().setAccessToken(data.accessToken);
       toast.success(data.message ?? "Login Succesfull!");
-      router.replace("/child/dashbaoard");
+      router.replace("/child/dashboard");
     },
     onError: (error: AxiosError<{ message: string }>) => {
       toast.error(error.response?.data.message ?? "Login Failed!");
