@@ -1,6 +1,6 @@
 import RegisterCard from "../../_components/RegisterCard";
 
-const page = () => {
+const RegisterPage = () => {
   return (
     <>
       <RegisterCard />
@@ -8,4 +8,4 @@ const page = () => {
   );
 };
 
-export default page;
+export default RegisterPage;

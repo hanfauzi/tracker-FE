@@ -3,6 +3,8 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { Toaster } from "@/components/ui/sonner"
 import ReactQueryProvider from "@/providers/ReactQueryProviders";
+import "@/lib/axios-interceptor";
+
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
